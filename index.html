@@ -5,17 +5,27 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
     <style>
       body { margin: 0; overflow: hidden; }
-      #baslatButonu {
+      #ui { 
         position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        padding: 20px; background: white; border: 2px solid black; z-index: 1000;
-        cursor: pointer; font-size: 18px; font-weight: bold;
+        padding: 20px; background: rgba(255,255,255,0.9); border: 2px solid #000;
+        z-index: 9999; text-align: center; font-family: sans-serif;
       }
     </style>
   </head>
   <body>
-    <div id="baslatButonu">DENEYİMİ BAŞLATMAK İÇİN DOKUN</div>
 
-   <a-scene mindar-image="imageTargetSrc: ./targets.mind; uiError: true; uiLoading: true;" ... > true;" >, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <div id="ui">
+      <h3>AR SİSTEMİ BAŞLATILIYOR</h3>
+      <p>Kamerayı açmak ve sesi etkinleştirmek için dokunun.</p>
+      <button id="start-btn" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">BAŞLAT</button>
+    </div>
+
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind; uiError: true; uiLoading: true;" 
+             color-space="sRGB" 
+             renderer="colorManagement: true, physicallyCorrectLights" 
+             vr-mode-ui="enabled: false" 
+             device-orientation-permission-ui="enabled: false">
+      
       <a-assets>
         <video id="vid" src="./video.mp4" webkit-playsinline playsinline loop muted></video>
       </a-assets>
@@ -28,12 +38,14 @@
     </a-scene>
 
     <script>
-      const buton = document.querySelector("#baslatButonu");
+      const startBtn = document.querySelector("#start-btn");
+      const ui = document.querySelector("#ui");
       const video = document.querySelector("#vid");
-      buton.addEventListener('click', () => {
-        video.muted = false; // Sesi açar
+
+      startBtn.addEventListener('click', () => {
+        video.muted = false; 
         video.play();
-        buton.style.display = 'none'; // Butonu gizler
+        ui.style.display = 'none';
       });
     </script>
   </body>
