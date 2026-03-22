@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      #baslatButonu {
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        padding: 20px; background: white; border: 2px solid black; z-index: 1000;
+        cursor: pointer; font-size: 18px; font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="baslatButonu">DENEYİMİ BAŞLATMAK İÇİN DOKUN</div>
+
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-assets>
+        <video id="vid" src="./video.mp4" webkit-playsinline playsinline loop muted></video>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video src="#vid" width="1" height="0.6" position="0 0 0"></a-video>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      const buton = document.querySelector("#baslatButonu");
+      const video = document.querySelector("#vid");
+      buton.addEventListener('click', () => {
+        video.muted = false; // Sesi açar
+        video.play();
+        buton.style.display = 'none'; // Butonu gizler
+      });
+    </script>
+  </body>
+</html>
